@@ -39,6 +39,7 @@ dependencies:
   shared_preferences:
   connectivity_plus:
   http:
+  introduction_screen: ^3.1.11
 
 dev_dependencies:
   flutter_test:

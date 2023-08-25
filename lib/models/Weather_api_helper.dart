@@ -7,7 +7,7 @@ class APIHelper {
   static APIHelper apiHelper = APIHelper._();
   Future<Weather?> fetchWeatherDetails(String location) async {
     String baseUrl =
-        "https://api.newsapi.org/v1/forecast.json?key=de47e69e7d09470087bd0c7b67459fb2&q=";
+        "https://api.weatherapi.com/v1/forecast.json?key=3873391baed64198918132838232205&q=";
     String endUrl = "$location&aqi=no";
     String api = baseUrl + endUrl;
     http.Response res = await http.get(Uri.parse(api));
