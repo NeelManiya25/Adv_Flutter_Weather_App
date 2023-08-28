@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/models/Weather_api_helper.dart';
 import 'package:weather_app/models/search_location.dart';
+import 'package:weather_app/models/weather_api_helper.dart';
 import 'package:weather_app/models/weather_model.dart';
 
 class WeatherProvider extends ChangeNotifier {
@@ -16,7 +16,7 @@ class WeatherProvider extends ChangeNotifier {
 
   Future<Weather?>? weatherData(String location) async {
     searchLocation.weather =
-    (await APIHelper.apiHelper.fetchWeatherDetails(location));
+        (await APIHelper.apiHelper.fetchWeatherDetails(location));
     return searchLocation.weather;
   }
 }

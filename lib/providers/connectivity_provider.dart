@@ -21,15 +21,6 @@ class ConnectivityProvider extends ChangeNotifier {
           notifyListeners();
           break;
 
-        case ConnectivityResult.bluetooth:
-          connection.status = "BLUETOOTH DATA";
-          notifyListeners();
-          break;
-
-        case ConnectivityResult.ethernet:
-          connection.status ="ETHERNET";
-          notifyListeners();
-          break;
         default:
           connection.status = "Waiting";
           notifyListeners();

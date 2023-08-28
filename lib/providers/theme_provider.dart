@@ -11,8 +11,7 @@ class ThemeProvider extends ChangeNotifier {
     themeModel.isDark = !themeModel.isDark;
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    prefs.setBool("isDark",themeModel.isDark);
+    prefs.setBool("isDark", themeModel.isDark);
 
     notifyListeners();
   }

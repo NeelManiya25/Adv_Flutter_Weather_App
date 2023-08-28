@@ -1,10 +1,10 @@
 import 'dart:ui';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app/Providers/Connectivityprovider.dart';
-import 'package:weather_app/Providers/theme_provider.dart';
-import 'package:weather_app/Providers/weather_providers.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:weather_app/models/weather_model.dart';
+import 'package:weather_app/providers/connectivity_provider.dart';
+import 'package:weather_app/providers/theme_provider.dart';
+import 'package:weather_app/providers/weather_provider.dart';
 import 'package:weather_app/utils/images_path.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,19 +26,26 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
+
     return SafeArea(
       child: GestureDetector(
         onTap: () {
           FocusManager.instance.primaryFocus!.unfocus();
         },
-        child: Scaffold(
-          body: (Provider.of<ConnectivityProvider>(context).connection.status ==
+        child: CupertinoPageScaffold(
+          child: (Provider.of<ConnectivityProvider>(context)
+                      .connection
+                      .status ==
                   "Waiting")
               ? Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset("assets/images/No_connection.jpg"),
+                      Image.asset(
+                        'assets/images/No_connection.jpg',
+                        height: 200,
+                        width: 200,
+                      ),
                       SizedBox(
                         height: _height * 0.01,
                       ),
@@ -98,20 +105,17 @@ class _HomePageState extends State<HomePage> {
                                         SizedBox(
                                           height: _height * 0.01,
                                         ),
-                                        TextField(
+                                        CupertinoSearchTextField(
                                           controller:
                                               Provider.of<WeatherProvider>(
                                                       context)
                                                   .searchLocation
                                                   .locationController,
-                                          cursorColor: Colors.white,
-                                          decoration: InputDecoration(
-                                            labelStyle: const TextStyle(
-                                              color: Colors.white,
-                                            ),
-                                            labelText: "Search location",
-                                            suffixIconColor: Colors.white,
-                                            suffixIcon: IconButton(
+                                          placeholder: 'Search',
+                                          decoration: BoxDecoration(
+                                            suffixIcon: CupertinoButton(
+                                              child: Icon(
+                                                  CupertinoIcons.xmark_circle),
                                               onPressed: () {
                                                 Provider.of<WeatherProvider>(
                                                         context,
@@ -120,21 +124,26 @@ class _HomePageState extends State<HomePage> {
                                                     .locationController
                                                     .clear();
                                               },
-                                              icon: const Icon(Icons.cancel),
-                                            ),
-                                            enabledBorder:
-                                                const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                            focusedBorder:
-                                                const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Colors.white,
-                                              ),
                                             ),
                                           ),
+
+                                          // decoration: Cupertinodecoration(
+                                          //   labelText: "Search location",
+                                          //   suffixIconColor:
+                                          //       CupertinoColors.white,
+                                          //   suffixIcon: CupertinoButton(
+                                          //     onPressed: () {
+                                          //       Provider.of<WeatherProvider>(
+                                          //               context,
+                                          //               listen: false)
+                                          //           .searchLocation
+                                          //           .locationController
+                                          //           .clear();
+                                          //     },
+                                          //     child: const Icon(
+                                          //         CupertinoIcons.xmark_circle),
+                                          //   ),
+                                          // ),
                                           onSubmitted: (val) {
                                             if (val.isNotEmpty) {
                                               Provider.of<WeatherProvider>(
@@ -176,7 +185,8 @@ class _HomePageState extends State<HomePage> {
                                                   style: TextStyle(
                                                     fontSize: _height * 0.04,
                                                     fontWeight: FontWeight.w500,
-                                                    color: Colors.white,
+                                                    color:
+                                                        CupertinoColors.white,
                                                   ),
                                                 ),
                                                 SizedBox(
@@ -184,8 +194,8 @@ class _HomePageState extends State<HomePage> {
                                                 ),
                                                 Row(
                                                   children: [
-                                                    const Icon(
-                                                        Icons.location_on),
+                                                    const Icon(CupertinoIcons
+                                                        .location),
                                                     SizedBox(
                                                       width: _width * 0.02,
                                                     ),
@@ -196,7 +206,8 @@ class _HomePageState extends State<HomePage> {
                                                             _height * 0.018,
                                                         fontWeight:
                                                             FontWeight.w500,
-                                                        color: Colors.white,
+                                                        color: CupertinoColors
+                                                            .white,
                                                       ),
                                                     ),
                                                     SizedBox(
@@ -209,31 +220,35 @@ class _HomePageState extends State<HomePage> {
                                                             _height * 0.018,
                                                         fontWeight:
                                                             FontWeight.w500,
-                                                        color: Colors.white,
+                                                        color: CupertinoColors
+                                                            .white,
                                                       ),
                                                     ),
                                                   ],
                                                 ),
                                               ],
                                             ),
-                                            IconButton(
+                                            CupertinoButton(
                                               onPressed: () {
                                                 Provider.of<ThemeProvider>(
                                                         context,
                                                         listen: false)
                                                     .changeTheme();
                                               },
-                                              icon: (Provider.of<ThemeProvider>(
+                                              child: (Provider.of<
+                                                              ThemeProvider>(
                                                           context)
                                                       .themeModel
                                                       .isDark)
                                                   ? const Icon(
-                                                      Icons.dark_mode,
-                                                      color: Colors.white,
+                                                      CupertinoIcons.sun_max,
+                                                      color:
+                                                          CupertinoColors.white,
                                                     )
                                                   : const Icon(
-                                                      Icons.light_mode,
-                                                      color: Colors.white,
+                                                      CupertinoIcons.light_max,
+                                                      color:
+                                                          CupertinoColors.white,
                                                     ),
                                             ),
                                           ],
@@ -253,7 +268,7 @@ class _HomePageState extends State<HomePage> {
                                               style: TextStyle(
                                                 fontSize: _height * 0.08,
                                                 fontWeight: FontWeight.w500,
-                                                color: Colors.white,
+                                                color: CupertinoColors.white,
                                               ),
                                             ),
                                             Text(
@@ -261,7 +276,7 @@ class _HomePageState extends State<HomePage> {
                                               style: TextStyle(
                                                 fontSize: _height * 0.025,
                                                 fontWeight: FontWeight.w500,
-                                                color: Colors.white,
+                                                color: CupertinoColors.white,
                                               ),
                                             ),
                                           ],
@@ -295,7 +310,8 @@ class _HomePageState extends State<HomePage> {
                                                             "Now",
                                                             style: TextStyle(
                                                               color:
-                                                                  Colors.white,
+                                                                  CupertinoColors
+                                                                      .white,
                                                               fontSize:
                                                                   _height *
                                                                       0.022,
@@ -308,7 +324,8 @@ class _HomePageState extends State<HomePage> {
                                                                     "${DateTime.now().day}")[1],
                                                             style: TextStyle(
                                                               color:
-                                                                  Colors.white,
+                                                                  CupertinoColors
+                                                                      .white,
                                                               fontSize:
                                                                   _height *
                                                                       0.022,
@@ -328,7 +345,8 @@ class _HomePageState extends State<HomePage> {
                                                     Text(
                                                       "${data.hour[index]['temp_c']}°",
                                                       style: TextStyle(
-                                                        color: Colors.white,
+                                                        color: CupertinoColors
+                                                            .white,
                                                         fontSize:
                                                             _height * 0.022,
                                                       ),
@@ -346,7 +364,7 @@ class _HomePageState extends State<HomePage> {
                                           "Weather details",
                                           style: TextStyle(
                                             fontSize: _height * 0.02,
-                                            color: Colors.white,
+                                            color: CupertinoColors.white,
                                           ),
                                         ),
                                         SizedBox(
@@ -365,9 +383,9 @@ class _HomePageState extends State<HomePage> {
                                                                 context)
                                                             .themeModel
                                                             .isDark)
-                                                        ? Colors.black
+                                                        ? CupertinoColors.black
                                                             .withOpacity(0.4)
-                                                        : Colors.white
+                                                        : CupertinoColors.white
                                                             .withOpacity(0.4),
                                                 borderRadius:
                                                     BorderRadius.circular(
@@ -381,7 +399,8 @@ class _HomePageState extends State<HomePage> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Icon(
-                                                      Icons.thermostat,
+                                                      CupertinoIcons
+                                                          .thermometer_sun,
                                                       size: _height * 0.04,
                                                     ),
                                                     SizedBox(
@@ -399,8 +418,10 @@ class _HomePageState extends State<HomePage> {
                                                                     context)
                                                                 .themeModel
                                                                 .isDark)
-                                                            ? Colors.grey
-                                                            : Colors.black54,
+                                                            ? CupertinoColors
+                                                                .extraLightBackgroundGray
+                                                            : CupertinoColors
+                                                                .black,
                                                       ),
                                                     ),
                                                     SizedBox(
@@ -447,9 +468,9 @@ class _HomePageState extends State<HomePage> {
                                                                 context)
                                                             .themeModel
                                                             .isDark)
-                                                        ? Colors.black
+                                                        ? CupertinoColors.black
                                                             .withOpacity(0.4)
-                                                        : Colors.white
+                                                        : CupertinoColors.white
                                                             .withOpacity(0.4),
                                                 borderRadius:
                                                     BorderRadius.circular(
@@ -463,7 +484,7 @@ class _HomePageState extends State<HomePage> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Icon(
-                                                      Icons.air,
+                                                      CupertinoIcons.wind,
                                                       size: _height * 0.04,
                                                     ),
                                                     SizedBox(
@@ -481,8 +502,10 @@ class _HomePageState extends State<HomePage> {
                                                                     context)
                                                                 .themeModel
                                                                 .isDark)
-                                                            ? Colors.grey
-                                                            : Colors.black54,
+                                                            ? CupertinoColors
+                                                                .extraLightBackgroundGray
+                                                            : CupertinoColors
+                                                                .black,
                                                       ),
                                                     ),
                                                     SizedBox(
@@ -540,9 +563,9 @@ class _HomePageState extends State<HomePage> {
                                                                 context)
                                                             .themeModel
                                                             .isDark)
-                                                        ? Colors.black
+                                                        ? CupertinoColors.black
                                                             .withOpacity(0.4)
-                                                        : Colors.white
+                                                        : CupertinoColors.white
                                                             .withOpacity(0.4),
                                                 borderRadius:
                                                     BorderRadius.circular(
@@ -556,7 +579,7 @@ class _HomePageState extends State<HomePage> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Icon(
-                                                      Icons.water_drop,
+                                                      CupertinoIcons.wind_snow,
                                                       size: _height * 0.04,
                                                     ),
                                                     SizedBox(
@@ -574,8 +597,10 @@ class _HomePageState extends State<HomePage> {
                                                                     context)
                                                                 .themeModel
                                                                 .isDark)
-                                                            ? Colors.grey
-                                                            : Colors.black54,
+                                                            ? CupertinoColors
+                                                                .extraLightBackgroundGray
+                                                            : CupertinoColors
+                                                                .black,
                                                       ),
                                                     ),
                                                     SizedBox(
@@ -624,9 +649,9 @@ class _HomePageState extends State<HomePage> {
                                                                 context)
                                                             .themeModel
                                                             .isDark)
-                                                        ? Colors.black
+                                                        ? CupertinoColors.black
                                                             .withOpacity(0.4)
-                                                        : Colors.white
+                                                        : CupertinoColors.white
                                                             .withOpacity(0.4),
                                                 borderRadius:
                                                     BorderRadius.circular(
@@ -640,7 +665,7 @@ class _HomePageState extends State<HomePage> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Icon(
-                                                      Icons.light_mode_outlined,
+                                                      CupertinoIcons.lightbulb,
                                                       size: _height * 0.04,
                                                     ),
                                                     SizedBox(
@@ -658,8 +683,10 @@ class _HomePageState extends State<HomePage> {
                                                                     context)
                                                                 .themeModel
                                                                 .isDark)
-                                                            ? Colors.grey
-                                                            : Colors.black54,
+                                                            ? CupertinoColors
+                                                                .extraLightBackgroundGray
+                                                            : CupertinoColors
+                                                                .black,
                                                       ),
                                                     ),
                                                     SizedBox(
@@ -717,9 +744,9 @@ class _HomePageState extends State<HomePage> {
                                                                 context)
                                                             .themeModel
                                                             .isDark)
-                                                        ? Colors.black
+                                                        ? CupertinoColors.black
                                                             .withOpacity(0.4)
-                                                        : Colors.white
+                                                        : CupertinoColors.white
                                                             .withOpacity(0.4),
                                                 borderRadius:
                                                     BorderRadius.circular(
@@ -733,7 +760,7 @@ class _HomePageState extends State<HomePage> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Icon(
-                                                      Icons.visibility,
+                                                      CupertinoIcons.eye,
                                                       size: _height * 0.04,
                                                     ),
                                                     SizedBox(
@@ -751,8 +778,10 @@ class _HomePageState extends State<HomePage> {
                                                                     context)
                                                                 .themeModel
                                                                 .isDark)
-                                                            ? Colors.grey
-                                                            : Colors.black54,
+                                                            ? CupertinoColors
+                                                                .extraLightBackgroundGray
+                                                            : CupertinoColors
+                                                                .black,
                                                       ),
                                                     ),
                                                     SizedBox(
@@ -801,9 +830,9 @@ class _HomePageState extends State<HomePage> {
                                                                 context)
                                                             .themeModel
                                                             .isDark)
-                                                        ? Colors.black
+                                                        ? CupertinoColors.black
                                                             .withOpacity(0.4)
-                                                        : Colors.white
+                                                        : CupertinoColors.white
                                                             .withOpacity(0.4),
                                                 borderRadius:
                                                     BorderRadius.circular(
@@ -817,7 +846,8 @@ class _HomePageState extends State<HomePage> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Icon(
-                                                      Icons.wind_power,
+                                                      CupertinoIcons
+                                                          .wand_stars_inverse,
                                                       size: _height * 0.04,
                                                     ),
                                                     SizedBox(
@@ -835,8 +865,10 @@ class _HomePageState extends State<HomePage> {
                                                                     context)
                                                                 .themeModel
                                                                 .isDark)
-                                                            ? Colors.grey
-                                                            : Colors.black54,
+                                                            ? CupertinoColors
+                                                                .extraLightBackgroundGray
+                                                            : CupertinoColors
+                                                                .black,
                                                       ),
                                                     ),
                                                     SizedBox(
@@ -889,8 +921,10 @@ class _HomePageState extends State<HomePage> {
                                                         context)
                                                     .themeModel
                                                     .isDark)
-                                                ? Colors.black.withOpacity(0.4)
-                                                : Colors.white.withOpacity(0.4),
+                                                ? CupertinoColors.black
+                                                    .withOpacity(0.4)
+                                                : CupertinoColors.white
+                                                    .withOpacity(0.4),
                                             borderRadius: BorderRadius.circular(
                                                 _height * 0.02),
                                           ),
@@ -906,7 +940,7 @@ class _HomePageState extends State<HomePage> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Icon(
-                                                      Icons.light_mode_outlined,
+                                                      CupertinoIcons.lightbulb,
                                                       size: _height * 0.04,
                                                     ),
                                                     SizedBox(
@@ -924,8 +958,10 @@ class _HomePageState extends State<HomePage> {
                                                                     context)
                                                                 .themeModel
                                                                 .isDark)
-                                                            ? Colors.grey
-                                                            : Colors.black54,
+                                                            ? CupertinoColors
+                                                                .extraLightBackgroundGray
+                                                            : CupertinoColors
+                                                                .black,
                                                       ),
                                                     ),
                                                     SizedBox(
@@ -947,7 +983,7 @@ class _HomePageState extends State<HomePage> {
                                                       CrossAxisAlignment.end,
                                                   children: [
                                                     Icon(
-                                                      Icons.dark_mode_outlined,
+                                                      CupertinoIcons.sun_max,
                                                       size: _height * 0.04,
                                                     ),
                                                     SizedBox(
@@ -965,8 +1001,10 @@ class _HomePageState extends State<HomePage> {
                                                                     context)
                                                                 .themeModel
                                                                 .isDark)
-                                                            ? Colors.grey
-                                                            : Colors.black54,
+                                                            ? CupertinoColors
+                                                                .extraLightBackgroundGray
+                                                            : CupertinoColors
+                                                                .black,
                                                       ),
                                                     ),
                                                     SizedBox(
@@ -995,7 +1033,7 @@ class _HomePageState extends State<HomePage> {
                             );
                     }
                     return const Center(
-                      child: CircularProgressIndicator(),
+                      child: CupertinoActivityIndicator(),
                     );
                   },
                 ),
