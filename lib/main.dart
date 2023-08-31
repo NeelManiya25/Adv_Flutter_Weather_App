@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,7 +8,9 @@ import 'package:weather_app/providers/connectivity_provider.dart';
 import 'package:weather_app/providers/theme_provider.dart';
 import 'package:weather_app/providers/weather_provider.dart';
 import 'package:weather_app/views/screens/HomePage.dart';
+import 'package:weather_app/views/screens/Home_page_ios.dart';
 import 'package:weather_app/views/screens/SplashScreen.dart';
+import 'package:weather_app/views/screens/intoScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +18,7 @@ void main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool appTheme = prefs.getBool("isDark") ?? false;
 
+  var isvisited;
   runApp(
     MultiProvider(
       providers: [
@@ -49,9 +50,12 @@ void main() async {
         themeMode: (Provider.of<ThemeProvider>(context).themeModel.isDark)
             ? ThemeMode.dark
             : ThemeMode.light,
+        initialRoute: (isvisited) ? 'Splash' : '/',
         routes: {
           'HomePage': (context) => const HomePage(),
           '/': (context) => const SplashScreen(),
+          'into': (context) => const intro_page(),
+          'Home_ios': (context) => const Home_ios_Page(),
         },
       ),
     ),

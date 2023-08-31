@@ -7,14 +7,14 @@ import 'package:weather_app/providers/theme_provider.dart';
 import 'package:weather_app/providers/weather_provider.dart';
 import 'package:weather_app/utils/images_path.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class Home_ios_Page extends StatefulWidget {
+  const Home_ios_Page({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<Home_ios_Page> createState() => _Home_ios_PageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _Home_ios_PageState extends State<Home_ios_Page> {
   @override
   void initState() {
     super.initState();
@@ -83,8 +83,8 @@ class _HomePageState extends State<HomePage> {
                                           (Provider.of<ThemeProvider>(context)
                                                   .themeModel
                                                   .isDark)
-                                              ? AssetImage(bgImageDark)
-                                              : AssetImage(bgImageLight),
+                                              ? AssetImage(iosImageDark)
+                                              : AssetImage(iosImageLight),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -112,20 +112,24 @@ class _HomePageState extends State<HomePage> {
                                                   .searchLocation
                                                   .locationController,
                                           placeholder: 'Search',
-                                          decoration: BoxDecoration(
-                                            suffixIcon: CupertinoButton(
-                                              child: Icon(
-                                                  CupertinoIcons.xmark_circle),
-                                              onPressed: () {
-                                                Provider.of<WeatherProvider>(
-                                                        context,
-                                                        listen: false)
-                                                    .searchLocation
-                                                    .locationController
-                                                    .clear();
-                                              },
-                                            ),
-                                          ),
+                                          // decoration: BoxDecoration(
+                                          //   suffixIcon: Row(
+                                          //     children: <Widget>[
+                                          //       CupertinoButton(
+                                          //         child: Icon(
+                                          //             CupertinoIcons.xmark_circle),
+                                          //         onPressed: () {
+                                          //           Provider.of<WeatherProvider>(
+                                          //                   context,
+                                          //                   listen: false)
+                                          //               .searchLocation
+                                          //               .locationController
+                                          //               .clear();
+                                          //         },
+                                          //       ),
+                                          //     ],
+                                          //   ),
+                                          // ),
 
                                           // decoration: Cupertinodecoration(
                                           //   labelText: "Search location",
